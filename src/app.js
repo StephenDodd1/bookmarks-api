@@ -4,7 +4,8 @@ const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
-
+const logger = require ('./logger')
+const bookmarksRouter = require('./bookmarks/bookmarks')
 const app = express()
 
 const morganOption = (NODE_ENV === 'production')
@@ -25,6 +26,7 @@ app.use(helmet())
 app.get('/', (req, res) => {
    res.send('Welcome to bookmarks App/API!')
 })
+app.use(bookmarksRouter)
 app.use(function errorHandler(error, req, res, next) {
    let response
    if (NODE_ENV === 'production') {
