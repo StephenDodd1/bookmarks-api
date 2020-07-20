@@ -57,10 +57,16 @@ bookmarksRouter
          .status(200)
          .json(bookmark)
    })
+bookmarksRouter
+   .route('/bookmarks/:id')
    .delete((req, res) => {
       const {id} = req.params
       const index = bookmarks.findIndex(bookmark => bookmark.id == id) 
       bookmarks.splice(index, 1)
+      console.log(index)
+      if(index === -1) {
+         return res.status(404).send(`error 404, no such article`)
+      }
       res
          .status(200)
          .send(`bookmark with id ${id} was removed from bookmarks`)
